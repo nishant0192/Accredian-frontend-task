@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
 
-const SignupForm = () => {
+const Signup = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ const SignupForm = () => {
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [passwordError, setPasswordError] = useState(null);
   const [apiError, setApiError] = useState(null);
-  const [username, setUsername] = useState("");
+  const [name, setname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,11 +34,11 @@ const SignupForm = () => {
     }
 
     try {
-      const payload = { username, email, password };
+      const payload = { name, email, password };
       console.log("Sending payload:", payload);
 
       const response = await axios.post(
-        "https://accredian-backend-task-s4jk.onrender.com/api/users/signup",
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/signup`,
         payload,
         {
           headers: {
@@ -51,7 +51,7 @@ const SignupForm = () => {
       toast.success("Signup successful!");
       console.log("Signup successful!", response.data);
       setApiError(null);
-      setUsername("");
+      setname("");
       setEmail("");
       setPassword("");
       navigate("/dashboard");
@@ -66,7 +66,7 @@ const SignupForm = () => {
       } else {
         setApiError("An error occurred. Please try again later.");
       }
-      setPassword(""); // Clear password field on error
+      setPassword("");
     }
   };
 
@@ -94,7 +94,7 @@ const SignupForm = () => {
     setPasswordValid(validatePassword(password));
     setPasswordStrength(calculatePasswordStrength(password));
     setPasswordError(null);
-    setPassword(password); // Update password state
+    setPassword(password);
   };
 
   const getProgressBarColor = (strength) => {
@@ -107,7 +107,7 @@ const SignupForm = () => {
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <Toaster /> {/* Ensure Toaster is rendered to display toasts */}
+      <Toaster />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto mb-6"
@@ -123,20 +123,20 @@ const SignupForm = () => {
         <form className="space-y-6" onSubmit={handleRegister}>
           <div>
             <label
-              htmlFor="username"
+              htmlFor="name"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              Username
+              Name
             </label>
             <div className="mt-2">
               <input
-                id="username"
-                name="username"
+                id="name"
+                name="name"
                 type="text"
-                autoComplete="username"
+                autoComplete="name"
                 required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={name}
+                onChange={(e) => setname(e.target.value)}
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -170,14 +170,6 @@ const SignupForm = () => {
               >
                 Password
               </label>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
             </div>
             <div className="mt-2">
               <input
@@ -220,7 +212,7 @@ const SignupForm = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+              Sign up
             </button>
             {apiError && (
               <p className="mt-2 text-xs text-red-500">{apiError}</p>
@@ -229,12 +221,12 @@ const SignupForm = () => {
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Don't have an account?{" "}
+          Already have an account?{" "}
           <a
             href="#"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
-            Sign up
+            Login
           </a>
         </p>
       </div>
@@ -242,4 +234,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default Signup;

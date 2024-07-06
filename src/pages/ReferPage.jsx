@@ -11,6 +11,7 @@ import write from "../assets/Layer_10.svg";
 import ReferBenefits from "../components/ReferBenefits";
 import Faq from "../components/Faq";
 import GetInTouch from "../components/GetInTouch";
+import Footer from "../components/Footer";
 
 const ReferPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -159,10 +160,14 @@ const ReferPage = () => {
           </button>
         </div>
       </div>
+      <div id="faq">
+        <Faq />
+      </div>
+      <div id="support">
+        <GetInTouch />
+      </div>
+      <Footer />
 
-      <Faq />
-      <GetInTouch/>
-      
       {isModalOpen && <Modal closeModal={closeModal} />}
     </div>
   );

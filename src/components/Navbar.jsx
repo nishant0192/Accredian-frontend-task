@@ -29,8 +29,8 @@ const Navbar = () => {
             <Link to="/refer" className="text-black hover:text-gray-300 ml-4">Refer & Earn</Link>
             <Link to="/rewards" className="text-black hover:text-gray-300 ml-4">Rewards</Link>
             <Link to="/about" className="text-black hover:text-gray-300 ml-4">About</Link>
-            <button className="bg-[#94A3B833] text-black hover:text-gray-300 focus:outline-none bg-white px-4 py-2 ml-4 rounded">Login</button>
-            <button className="bg-[#1A73E8] text-white px-4 py-2 rounded ml-4">Try for Free</button>
+            <Link to="/login" className="bg-[#94A3B833] text-black hover:text-gray-300 focus:outline-none bg-white px-4 py-2 ml-4 rounded">Login</Link>
+            <Link to="/signup" className="bg-[#1A73E8] text-white px-4 py-2 rounded ml-4">Try for Free</Link>
           </div>
           
           <div className="md:hidden ml-4">

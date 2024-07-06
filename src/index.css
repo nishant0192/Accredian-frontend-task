@@ -1,0 +1,62 @@
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  width: 50vw;
+}
+
+.nav-item {
+  text-decoration: none;
+  padding: 10px;
+  transition: color 0.3s ease;
+  font-weight: 600;
+}
+
+.nav-item.active {
+  font-weight: bold;
+}
+
+.indicator {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background-color: #007bff;
+  border-radius: 50%;
+  transition: left 0.3s ease;
+}
+
+.toggle-checkbox {
+  width: 40px;
+  height: 20px;
+  appearance: none;
+  background-color: #ccc;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+}
+
+.toggle-checkbox:checked {
+  background-color: #4caf50;
+}
+
+.toggle-checkbox:checked::before {
+  transform: translateX(20px);
+}
+
+.toggle-checkbox::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}

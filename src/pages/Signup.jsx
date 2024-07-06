@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
-// import { useHistory } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
-//   const history = useHistory();
+const SignupForm = () => {
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [passwordValid, setPasswordValid] = useState(false);
@@ -34,10 +34,18 @@ const Signup = () => {
     }
 
     try {
+      const payload = { username, email, password };
+      console.log("Sending payload:", payload);
+
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/signup`,
-        { username, email, password },
-        { withCredentials: true }
+        "https://accredian-backend-task-s4jk.onrender.com/api/users/signup",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
       );
 
       toast.success("Signup successful!");
@@ -46,7 +54,7 @@ const Signup = () => {
       setUsername("");
       setEmail("");
       setPassword("");
-    //   history.push("/dashboard");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Signup error:", error);
       if (axios.isAxiosError(error)) {
@@ -58,7 +66,7 @@ const Signup = () => {
       } else {
         setApiError("An error occurred. Please try again later.");
       }
-      setPassword("");
+      setPassword(""); // Clear password field on error
     }
   };
 
@@ -86,7 +94,7 @@ const Signup = () => {
     setPasswordValid(validatePassword(password));
     setPasswordStrength(calculatePasswordStrength(password));
     setPasswordError(null);
-    setPassword(password);
+    setPassword(password); // Update password state
   };
 
   const getProgressBarColor = (strength) => {
@@ -99,7 +107,7 @@ const Signup = () => {
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <Toaster />
+      <Toaster /> {/* Ensure Toaster is rendered to display toasts */}
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto mb-6"
@@ -125,10 +133,11 @@ const Signup = () => {
                 id="username"
                 name="username"
                 type="text"
+                autoComplete="username"
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -148,7 +157,7 @@ const Signup = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -179,7 +188,7 @@ const Signup = () => {
                 required
                 value={password}
                 onChange={handlePasswordChange}
-                className={`block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
+                className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
                   passwordError ? "border-red-500" : ""
                 }`}
               />
@@ -220,12 +229,12 @@ const Signup = () => {
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Not a member?{" "}
+          Don't have an account?{" "}
           <a
             href="#"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
-            Start a 14 day free trial
+            Sign up
           </a>
         </p>
       </div>
@@ -233,4 +242,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupForm;
